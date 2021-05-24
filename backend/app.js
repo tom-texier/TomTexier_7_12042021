@@ -1,6 +1,7 @@
 // Importer les packages
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 const mysql = require('mysql');
 
@@ -26,8 +27,6 @@ con.connect(function(err) {
         }
     });
 });
-
-
 
 // Headers pour contourner les erreurs de CORS
 app.use((req, res, next) => {
