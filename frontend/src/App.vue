@@ -1,18 +1,16 @@
 <template>
   <div>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <ShowGreetings></ShowGreetings>
+    <router-view />
   </div>
 </template>
 
 <script>
 import {defineComponent} from 'vue'
-import ShowGreetings from './components/ShowGreetings'
 
 export default defineComponent({
   name: 'App',
   components: {
-    ShowGreetings
+    
   }
 })
 </script>
