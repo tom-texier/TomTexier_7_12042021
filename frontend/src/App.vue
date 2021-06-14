@@ -1,27 +1,32 @@
 <template>
-  <div>
-    <router-view />
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-import {defineComponent} from 'vue'
+import { onMounted } from "vue";
+import { userIsLogged } from "./mixins/auth";
+import { useRouter } from "vue-router";
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    
-  }
-})
+export default {
+  name: "App",
+  setup() {
+    const router = useRouter();
+
+    onMounted(() => {
+      if (!userIsLogged()) return router.push("/login");
+    });
+  },
+};
 </script>
 
 <style lang="scss">
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+$primary-color: #FD2D01;
+$secondary-color: #FFD7D7;
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: "Poppins", sans-serif;
 }
 </style>

@@ -7,10 +7,9 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
 import { HTTP } from "../http-constants"
 
-export default defineComponent({
+export default {
     name: "ShowGreetings",
     data(){
         return{
@@ -29,7 +28,7 @@ export default defineComponent({
                 })
         }
     }
-})
+}
 </script>
 
 <style scoped>
