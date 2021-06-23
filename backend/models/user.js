@@ -7,11 +7,10 @@ const User = function(user) {
     this.password = user.password;
     this.avatar_url = user.avatarUrl;
     this.job = user.job;
-    this.role = user.role;
 }
 
 User.create = (newUser, result) => {
-    sql.query('INSERT INTO Users SET ?', newUser, (err, res) => {
+    sql.query('INSERT INTO users SET ?', newUser, (err, res) => {
         if (err) {
             console.error(err)
             result(err, null);
@@ -25,7 +24,6 @@ User.create = (newUser, result) => {
             firstname: newUser.firstname,
             email: newUser.email,
             job: newUser.job,
-            role: newUser.role
         })
     })
 }
@@ -33,7 +31,7 @@ User.create = (newUser, result) => {
 User.getAll = (result) => {
     sql.query(
         `SELECT email, firstname, lastname, job, avatar_url
-        FROM Users`,
+        FROM users`,
         (err, res) => {
             if (err) {
                 console.error(err);
@@ -49,8 +47,28 @@ User.getAll = (result) => {
 User.findById = (userId, result) => {
     sql.query(
         `SELECT id, email, firstname, lastname, job, role
-        FROM Users
+        FROM users
         WHERE id = ${userId}`,
+        (err, res) => {
+            if (err) {
+                console.error(err);
+                result(err, null);
+                return;
+            }
+
+            if (res.length) {
+                result(null, res[0]);
+                return;
+            }
+
+            result({ code: 'not-found' }, null);
+        }
+    )
+}
+
+User.findByEmail = (userEmail, result) => {
+    sql.query(
+        `SELECT * FROM users WHERE email = ?`, userEmail,
         (err, res) => {
             if (err) {
                 console.error(err);

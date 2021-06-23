@@ -2,6 +2,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv').config();
+
+const authRoutes = require('./routes/auth');
 
 // Headers pour contourner les erreurs de CORS
 app.use((req, res, next) => {
@@ -16,10 +19,6 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-    res.json({
-        message: "Bienvenue sur le réseau social de Groupomania"
-    })
-});
+app.use('/auth', authRoutes);
 
 module.exports = app;
