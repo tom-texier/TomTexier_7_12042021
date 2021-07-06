@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
 // Headers pour contourner les erreurs de CORS
 app.use((req, res, next) => {
@@ -14,11 +15,11 @@ app.use((req, res, next) => {
     next();
 });
 
-
 // Rendre la requête exploitable
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
 module.exports = app;

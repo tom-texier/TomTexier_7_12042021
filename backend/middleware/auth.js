@@ -11,6 +11,7 @@ module.exports = (req, res, next) => {
         if (req.body.userID && req.body.userID !== userId) {
             throw 'Invalid user ID'; // Générer une erreur
         } else {
+            req.userID = userId;
             next();
         }
     } catch {

@@ -46,7 +46,7 @@ User.getAll = (result) => {
 
 User.findById = (userId, result) => {
     sql.query(
-        `SELECT id, email, firstname, lastname, job, role
+        `SELECT firstname, lastname, email, job, avatar_url, role
         FROM users
         WHERE id = ${userId}`,
         (err, res) => {

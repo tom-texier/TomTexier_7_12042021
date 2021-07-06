@@ -37,22 +37,24 @@ exports.login = (req, res, next) => {
         if (err) {
             switch (err.code) {
                 case 'not-found':
-                    res.status(404).json({ message: `Not found ${req.body.email}` });
+                    return res.status(404).json({ message: `Ce compte ne semble pas être enregistré.` });
                 default:
-                    res.status(500).json({ message: `Error retrieving User ${req.body.email}` });
+                    return res.status(500).json({ message: `Une erreur est survenue. Merci de réessayer utltérieurement.` });
             }
         } else {
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
-                        return res.status(401).json({ error: "Mot de passe incorrect" });
+                        return res.status(401).json({ error: "Il semble que l'email et/ou le mot de passe renseignés ne soit pas valides." });
                     }
-                    res.status(200).json({
+                    return res.status(200).json({
                         userID: user.ID,
                         token: jwt.sign({ userID: user.ID }, process.env.JWT_SECRET_TOKEN, { expiresIn: '24h' })
                     });
                 })
-                .catch(error => res.status(500).json({ error }));
+                .catch(error => {
+                    return res.status(500).json({ error })
+                });
         }
     })
 }
