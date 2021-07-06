@@ -1,0 +1,73 @@
+form {
+    padding: 20px;
+    font-family: "Poppins";
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+form .input-gif {
+    display: flex;
+    position: relative;
+}
+
+form .input-gif input {
+    border: 1px solid rgba(0, 0, 0, .08);
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    color: rgba(0, 0, 0, .6);
+    outline: none;
+    font-family: "Poppins";
+}
+
+form .input-gif .datalist {
+    background-color: #fff;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: 300px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    box-shadow: 0 0 10px -5px rgba(0, 0, 0, .3);
+}
+
+form textarea {
+    border: none;
+    display: block;
+    padding: 10px 15px;
+    color: rgba(0, 0, 0, .6);
+    outline: none;
+    font-family: "Poppins";
+    margin-top: 10px;
+    min-height: 300px;
+}
+
+form p.alternative {
+    margin: 5px 0 0;
+    font-size: 13px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+form button {
+    width: max-content;
+    display: block;
+    border: none;
+    outline: none;
+    background: #FD2D01;
+    border-radius: 35px;
+    padding: 10px 25px;
+    color: #fff;
+    transition: .4s;
+    margin-left: auto;
+    margin-top: 20px;
+}
+
+form button:not(:disabled) {
+    cursor: pointer;
+}
+
+form button:not(:disabled):hover {
+    background-color: #e42801;
+}

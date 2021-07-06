@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <form id="signup" @submit.prevent="signup">
-      <h1>Connexion</h1>
+      <h1>Inscription</h1>
       <p>
         Tu as déjà un compte ?
         <router-link to="/login">Se connecter</router-link>
@@ -57,6 +57,8 @@
 </template>
 
 <script>
+
+import { signupCall } from '../mixins/auth'
 
 export default {
     name: "SignupPage",
@@ -134,7 +136,14 @@ export default {
             }
         },
         signup() {
-            
+            const user = {
+                firstname: this.firstname,
+                lastname: this.lastname,
+                email: this.email,
+                password: this.password,
+                job: this.job,
+            };
+            signupCall(user);
         }
     }
 };

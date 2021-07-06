@@ -5,13 +5,11 @@
 <script>
 import { onMounted } from "vue";
 import { userIsLogged } from "./mixins/auth";
-import { useRouter } from "vue-router";
+import router from "./router";
 
 export default {
   name: "App",
   setup() {
-    const router = useRouter();
-
     onMounted(() => {
       if (!userIsLogged()) return router.push("/login");
     });
@@ -28,5 +26,15 @@ $secondary-color: #FFD7D7;
 
 #app {
   font-family: "Poppins", sans-serif;
+}
+
+.section-container {
+  max-width: 1250px;
+  padding: 0 10px;
+  margin: auto;
+}
+
+.row {
+  display: flex;
 }
 </style>

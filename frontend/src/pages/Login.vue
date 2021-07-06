@@ -1,11 +1,12 @@
 <template>
   <div class="login-container">
-    <form id="signin">
+    <form id="signin" @submit.prevent="login">
       <h1>Connexion</h1>
       <p>
         Tu n'as pas encore de compte ?
         <router-link to="/signup">Créer un compte</router-link>
       </p>
+      <p class="error" v-if="error">{{ error }}</p>
       <div class="row">
         <div class="group">
           <label for="signin-email">Email</label>
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+import { loginCall } from '../mixins/auth'
 
 export default {
     name: "LoginPage",
@@ -36,7 +38,8 @@ export default {
             email: "",
             password: "",
             emailRegExp: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            disabledButton: true
+            disabledButton: true,
+            error: ""
         }
     },
     methods: {
@@ -50,6 +53,13 @@ export default {
             else {
                 this.disabledButton = true;
             }
+        },
+        login() {
+            const user = {
+                email: this.email,
+                password: this.password,
+            };
+            loginCall(user);
         }
     }
 };

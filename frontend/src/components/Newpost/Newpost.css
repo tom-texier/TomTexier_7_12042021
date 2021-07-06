@@ -1,0 +1,35 @@
+.newpost {
+    display: flex;
+    box-shadow: 0 0 10px -5px rgba(0, 0, 0, .3);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.newpost img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.newpost .input {
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 35px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    margin-left: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, .3);
+    cursor: pointer;
+}
+
+.newpost .input:hover {
+    background-color: rgba(0, 0, 0, .08);
+}
+
+.newpost .input i {
+    font-size: 20px;
+    margin-right: 20px;
+}
