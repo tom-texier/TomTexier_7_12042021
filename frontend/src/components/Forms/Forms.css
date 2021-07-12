@@ -30,6 +30,18 @@ form .input-gif .datalist {
     height: 300px;
     border: 1px solid rgba(0, 0, 0, .08);
     box-shadow: 0 0 10px -5px rgba(0, 0, 0, .3);
+    overflow: auto;
+}
+
+form .input-gif .datalist .results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+}
+
+form .input-gif .datalist .results img {
+    width: 100%;
+    cursor: pointer;
 }
 
 form textarea {
