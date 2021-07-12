@@ -1,4 +1,4 @@
-const sql = require('./db.js');
+const sql = require('./db');
 
 const User = function(user) {
     this.lastname = user.lastname;
