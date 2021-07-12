@@ -13,6 +13,7 @@ form .input-gif {
 
 form .input-gif input {
     border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 35px;
     display: block;
     width: 100%;
     padding: 10px 15px;
@@ -25,12 +26,14 @@ form .input-gif .datalist {
     background-color: #fff;
     width: 100%;
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: calc(100% + 5px);
+    left: 0%;
     height: 300px;
     border: 1px solid rgba(0, 0, 0, .08);
-    box-shadow: 0 0 10px -5px rgba(0, 0, 0, .3);
+    box-shadow: 0 0 10px -5px rgba(0, 0, 0, .2);
     overflow: auto;
+    border-radius: 20px;
+    padding: 20px;
 }
 
 form .input-gif .datalist .results {
@@ -41,7 +44,14 @@ form .input-gif .datalist .results {
 
 form .input-gif .datalist .results img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     cursor: pointer;
+    transition: .2s;
+}
+
+form .input-gif .datalist .results img:hover {
+    transform: scale(1.05);
 }
 
 form textarea {
@@ -55,11 +65,23 @@ form textarea {
     min-height: 300px;
 }
 
-form p.alternative {
+form label[for="alternative"] {
     margin: 5px 0 0;
     font-size: 13px;
     padding-left: 10px;
     cursor: pointer;
+}
+
+form label[for="alternative"]:hover {
+    text-decoration: underline;
+}
+
+form input#alternative {
+    display: none;
+}
+
+form .selectImage {
+    margin-top: 20px;
 }
 
 form button {

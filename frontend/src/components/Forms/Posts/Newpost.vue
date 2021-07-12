@@ -1,18 +1,20 @@
 <template>
-    <form>
+    <form @submit="publish">
         <div class="input-gif">
             <input v-model="query" type="text" placeholder="Rechercher un gif..." @click="inputFocused" @keyup="searchGif">
             <div v-if="reveal" class="datalist">
                 <div class="results" v-if="results && results.length != 0">
-                    <img :src="gif.images.fixed_width_small.url" class="image-card" v-for="gif in results" :key="gif.id" @click="selectGif">
+                    <img :src="gif.images.original.url" class="image-card" v-for="gif in results" :key="gif.id" @click="selectGif">
                 </div>
                 <div class="empty" v-if="results.length == 0 || !results">
                     Aucun résultat
                 </div>
             </div>
         </div>
-        <p class="alternative">Ou insérer une image</p>
-        <textarea placeholder="Ajouter une description"></textarea>
+        <label for="alternative">Ou insérer une image</label>
+        <input type="file" id="alternative" @change="onFileChange">
+        <img v-if="image" :src="image" alt="Image ou gif choisi" class="selectImage">
+        <textarea v-model="description" placeholder="Ajouter une description"></textarea>
         <button>Publier</button>
     </form>
 </template>
@@ -29,7 +31,9 @@ export default {
             query: "",
             apiKey: "05pHQKk692kM4shQ4Bh7Ta7n4CuhgW2j",
             apiUrl: "https://api.giphy.com/v1/gifs/search",
-            gifSelected: ""
+            image: "",
+            description: "",
+            file: ""
         }
     },
     methods: {
@@ -41,7 +45,7 @@ export default {
                 params: {
                     api_key: this.apiKey,
                     q: this.query.split(' ').join('+'),
-                    limit: 25,
+                    limit: 28,
                     lang: 'fr'
                 }
             })
@@ -53,9 +57,34 @@ export default {
             })
         },
         selectGif(e) {
-            this.gifSelected = e.currentTarget.getAttribute('src');
+            this.removeImage();
+            this.file = e.currentTarget.getAttribute('src');
+            this.image = e.currentTarget.getAttribute('src');
             this.reveal = false;
-            console.log(this.gifSelected);
+            this.query = "";
+        },
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            this.createImage(files[0]);
+        },
+        createImage(file) {
+            var reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            this.file = file;
+        },
+        removeImage: function () {
+            this.image = '';
+            this.file = '';
+        },
+        publish(e) {
+            e.preventDefault();
         }
     }
 }

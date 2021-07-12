@@ -24,6 +24,10 @@ export default {
 $primary-color: #FD2D01;
 $secondary-color: #FFD7D7;
 
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
 #app {
   font-family: "Poppins", sans-serif;
 }
