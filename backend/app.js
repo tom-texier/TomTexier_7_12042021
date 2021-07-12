@@ -19,6 +19,9 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Servir le dossier image de façon statique
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 
