@@ -18,3 +18,13 @@ exports.create = (req, res, next) => {
         return res.status(201).json({ post });
     })
 }
+
+exports.getAll = (req, res, next) => {
+    Post.getAll((err, posts) => {
+        if (err) {
+            return res.status(500).json({ message: err.message || 'Some error occurred while creating the post.' })
+        }
+        console.log(posts);
+        return res.status(200).json({ posts });
+    });
+}

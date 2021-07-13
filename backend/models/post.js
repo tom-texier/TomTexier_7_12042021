@@ -28,10 +28,33 @@ Post.create = (newPost, result) => {
     })
 }
 
-Post.getAll = () => {
-    sql.query(
-        `SELECT `
-    )
+Post.getAll = (result) => {
+    sql.query(`
+        SELECT
+            posts.*,
+            users.lastname,
+            users.firstname,
+            users.avatar_url,
+            users.job,
+            COUNT(likes.id_post) AS NB_LIKES,
+            COUNT(comments.id_post) AS NB_COMMENTS,
+            COUNT(shares.id_post) AS NB_SHARES
+        FROM
+            posts
+        LEFT JOIN likes ON likes.id_post = posts.ID
+        LEFT JOIN comments ON comments.id_post = posts.ID
+        LEFT JOIN shares ON shares.id_post = posts.ID
+        LEFT JOIN users ON users.ID = posts.id_user
+        GROUP BY
+            posts.ID
+    `,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+                return;
+            }
+            result(null, res);
+        })
 }
 
 module.exports = Post;
