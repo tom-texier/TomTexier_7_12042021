@@ -1,5 +1,5 @@
 <template>
-    <form @submit="publish">
+    <form @submit="update">
         <div class="input-gif">
             <input v-model="query" type="text" placeholder="Rechercher un gif..." @click="inputFocused" @keyup="searchGif">
             <div v-if="reveal" class="datalist">
@@ -15,16 +15,16 @@
         <input ref="file" type="file" id="alternative" @change="onFileChange">
         <img v-if="image" :src="image" alt="Image ou gif choisi" class="selectImage">
         <textarea v-model="description" placeholder="Ajouter une description"></textarea>
-        <button>Publier</button>
+        <button>Modifier</button>
     </form>
 </template>
 
 <script>
 import axios from 'axios';
-import { createPost } from '../../../mixins/post';
+import { updatePost } from '../../../mixins/post';
 
 export default {
-    name: "FormNewpost",
+    name: "FormEditpost",
     data() {
         return {
             reveal: false,
@@ -38,7 +38,20 @@ export default {
             gif: ""
         }
     },
+    props: [
+        'post'
+    ],
+    mounted() {
+        this.description = this.br2nl(this.post.description),
+        this.image = this.post.image,
+        this.gif = this.post.image
+    },
     methods: {
+        br2nl(str) {
+            var replaceStr = "";
+            // Includes <br>, <BR>, <br />, </br>
+            return str.replace(/<\/?br ?\/?>/gi, replaceStr);
+        },
         inputFocused() {
             this.reveal = true;
         },
@@ -76,10 +89,12 @@ export default {
             };
             reader.readAsDataURL(this.file);
         },
-        publish(e) {
+        update(e) {
             e.preventDefault();
 
             let post;
+
+            console.log();
 
             if(this.gif != "") {
                 post = {
@@ -96,7 +111,7 @@ export default {
                 console.log("Erreur : la publication ne peut être vide !");
             }
 
-            createPost(post)
+            updatePost(post, this.post.ID)
                 .then(data => {
                     console.log(data);
                 })

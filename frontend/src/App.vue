@@ -11,7 +11,12 @@ export default {
   name: "App",
   setup() {
     onMounted(() => {
-      if (!userIsLogged()) return router.push("/login");
+      if (!userIsLogged()) {
+        return router.push("/login");
+      }
+      else {
+        return router.push("/");
+      }
     });
   },
 };
@@ -36,6 +41,7 @@ $secondary-color: #FFD7D7;
   max-width: 1250px;
   padding: 0 10px;
   margin: auto;
+  position: relative;
 }
 
 .row {

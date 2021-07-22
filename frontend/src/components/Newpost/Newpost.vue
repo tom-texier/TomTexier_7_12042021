@@ -26,6 +26,7 @@ export default {
         openModal(e) {
             this.reveal = true;
             this.titleModal = e.currentTarget.getAttribute('title');
+            this.action = 'create';
         },
         closeModal(e) {
             if(e.target === e.currentTarget) {

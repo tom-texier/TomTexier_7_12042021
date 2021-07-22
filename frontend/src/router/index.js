@@ -30,6 +30,10 @@ const routes = [
             title: "S'inscrire | Groupomania"
         }
     },
+    {
+        name: 'user',
+        path: '/user/:id',
+    }
 
 ];
 

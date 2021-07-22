@@ -1,0 +1,82 @@
+article {
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px -5px rgba(0, 0, 0, .3);
+    border-radius: 10px;
+}
+
+article header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+article header nav {
+    color: rgba(0, 0, 0, .3);
+    position: relative;
+}
+
+article header nav .toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+article header nav .toggle:hover {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+article header nav .menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: #fff;
+    list-style-type: none;
+    padding: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px -5px rgba(0, 0, 0, .3);
+    margin: 0;
+    overflow: hidden;
+}
+
+article header nav .menu li {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: rgba(0, 0, 0, .5);
+    font-size: 14px;
+}
+
+article header nav .menu li::selection {
+    background-color: none;
+    color: inherit;
+}
+
+article header nav .menu li:hover {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+article header nav .menu li i {
+    margin-right: 15px;
+}
+
+article .img {
+    width: 100%;
+    height: auto;
+    background-color: rgba(0, 0, 0, .02);
+}
+
+article .img img {
+    max-width: 100%;
+    min-width: 400px;
+    object-fit: contain;
+    max-height: 600px;
+    margin: auto;
+    display: block;
+}

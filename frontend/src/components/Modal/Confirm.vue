@@ -1,18 +1,12 @@
 <template>
     <div v-if="reveal" class="modal-box" @click="closeModal">
         <div class="modal-content">
-            <div class="title">
+            <header class="title">
                 <h2>{{ title }}</h2>
                 <i class="fas fa-times" @click="closeModal"></i>
-            </div>
-            <Avatar
-                :avatar_url="user.avatar_url"
-                :firstname="user.firstname"
-                :lastname="user.lastname"
-                :route="'/me'"
-            ></Avatar>
-            <form-newpost v-if="action == 'create'"></form-newpost>
-            <form-editpost v-else-if="action == 'update'" :post="post"></form-editpost>
+            </header>
+            <main></main>
+            <footer></footer>
         </div>
     </div>
 </template>

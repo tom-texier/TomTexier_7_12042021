@@ -2,7 +2,7 @@ const sql = require('./db');
 
 const Post = function(post) {
     this.id_user = post.idUser;
-    this.description = post.description;
+    this.description = nl2br(post.description);
     this.image = post.image;
 }
 
@@ -14,7 +14,7 @@ Post.create = (newPost, result) => {
             return;
         }
 
-        console.log('created publication: ', {
+        console.log('Post créé: ', {
             id: res.insertId,
             ...newPost,
         });
@@ -24,6 +24,22 @@ Post.create = (newPost, result) => {
             datePublish: newPost.date_publish,
             image: newPost.image,
             description: newPost.description
+        })
+    })
+}
+
+Post.update = (postID, userID, updatePost, result) => {
+    sql.query(`UPDATE posts SET ? WHERE ID = ${postID}`, updatePost, (err, res) => {
+        if (err) {
+            console.log('error: ', err);
+            result(err, null);
+            return;
+        }
+        console.log('Post mis à jour', {
+            ...updatePost
+        });
+        result(null, {
+            ...updatePost
         })
     })
 }
@@ -47,6 +63,7 @@ Post.getAll = (result) => {
         LEFT JOIN users ON users.ID = posts.id_user
         GROUP BY
             posts.ID
+        ORDER BY posts.date_publish DESC
     `,
         (err, res) => {
             if (err) {

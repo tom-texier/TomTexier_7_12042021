@@ -5,11 +5,12 @@
                 <img src="../../assets/icon-left-font.png" alt="Logo de Groupomania">
             </router-link>
             <div class="menu">
-                <router-link to="/me">
-                    <img v-if="user.avatar_url" :src="user.avatar_url" alt="Avatar">
-                    <img v-else src="../../assets/default_profile_pic.jpeg" alt="Avatar">
-                    <p>{{ user.firstname }} {{ user.lastname }}</p>
-                </router-link>
+                <Avatar
+                    :avatar_url="user.avatar_url"
+                    :firstname="user.firstname"
+                    :lastname="user.lastname"
+                    :route="'/me'"
+                ></Avatar>
             </div>
         </div>
     </nav>
@@ -17,11 +18,16 @@
 
 <script>
 
+import Avatar from '../Avatar/Avatar'
+
 export default {
     name: "HeaderTop",
     props: [
         'user'
-    ]
+    ],
+    components: {
+        Avatar
+    }
 }
 
 </script>
