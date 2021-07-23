@@ -14,7 +14,7 @@
                 </div>
                 <ul class="menu" v-if="toggleMenu">
                     <li @click="openModal" tabindex="0"><i class="fas fa-pencil-alt"></i>Modifier</li>
-                    <li tabindex="0"><i class="far fa-trash-alt"></i>Supprimer</li>
+                    <li @click="openConfirm" tabindex="0"><i class="far fa-trash-alt"></i>Supprimer</li>
                 </ul>
             </nav>
         </header>
@@ -24,7 +24,8 @@
                 <img :src="post.image" alt="Image de l'article">
             </div>
         </main>
-        <modal :reveal="reveal" :title="titleModal" :action="action" @closeModal="closeModal" :user="user" :post="post"></modal>
+        <Modal :reveal="revealModal" :title="titleModal" :action="action" @closeModal="closeModal" :user="user" :post="post"></Modal>
+        <Confirm :reveal="revealConfirm" :title="titleModal" :action="action" @closeConfirm="closeConfirm" :post="post" :message="message"></Confirm>
     </article>
 </template>
 
@@ -32,21 +33,25 @@
 
 import Avatar from '../Avatar/Avatar'
 import Modal from '../Modal/Modal'
+import Confirm from '../Modal/Confirm'
 
 export default {
     name: "Post",
     data() {
         return {
             toggleMenu: false,
-            reveal: false,
+            revealModal: false,
+            revealConfirm: false,
             titleModal: "",
             action: "",
-            user: ""
+            user: "",
+            message: ""
         }
     },
     components: {
         Avatar,
-        'modal': Modal
+        Modal,
+        Confirm
     },
     props: [
         'post',
@@ -96,7 +101,7 @@ export default {
         },
         openModal() {
             this.hideMenu();
-            this.reveal = true;
+            this.revealModal = true;
             this.titleModal = "Modifier le post";
             this.action = 'update';
             this.user = {
@@ -108,7 +113,19 @@ export default {
         },
         closeModal(e) {
             if(e.target === e.currentTarget) {
-                this.reveal = false;
+                this.revealModal = false;
+            }
+        },
+        openConfirm() {
+            this.hideMenu();
+            this.revealConfirm = true;
+            this.titleModal = "Êtes-vous sûr ?";
+            this.message = "Cette action est irréversible. Vous et les autres utilisateurs n'aurez aucun moyen de récupérer cette publication.";
+            this.action = 'deletePost';
+        },
+        closeConfirm(e) {
+            if(e.target === e.currentTarget) {
+                this.revealConfirm = false;
             }
         }
     }

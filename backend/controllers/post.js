@@ -21,7 +21,7 @@ exports.create = (req, res, next) => {
 
     Post.create(post, (err, post) => {
         if (err) {
-            return res.status(500).json({ message: err.message || 'Some error occurred while creating the post.' })
+            return res.status(500).json({ message: err.message || 'Une erreur est survenue pendant la création de la publication' });
         }
         return res.status(201).json({ post });
     })
@@ -31,8 +31,6 @@ exports.update = (req, res, next) => {
     if (!req.body) {
         res.status(400).json({ message: 'Le contenu ne peut être vide !' });
     }
-
-    console.log(req.body);
 
     const post = {
         description: nl2br(req.body.description),
@@ -44,16 +42,32 @@ exports.update = (req, res, next) => {
         req.userID, {...post },
         (err, post) => {
             if (err) {
-                return res.status(500).json({ message: err.message || 'Some error occurred while updating the post.' })
+                return res.status(500).json({ message: err.message || 'Une erreur est survenue pendant la mise à jour de la publication' });
             }
             return res.status(200).json({ post });
         })
 }
 
+exports.delete = (req, res, next) => {
+    if (!req.params.postID) {
+        res.status(400).json({ message: 'Une erreur est survenue. Nous n\'arrivons pas à récupérer cette publication' });
+    }
+
+    Post.delete(
+        req.params.postID,
+        (err, postID) => {
+            if (err) {
+                res.status(500).json({ message: err.message || 'Une erreur est survenue pendant la suppression de la publication' });
+            }
+            return res.status(200).json(postID);
+        }
+    )
+}
+
 exports.getAll = (req, res, next) => {
     Post.getAll((err, posts) => {
         if (err) {
-            return res.status(500).json({ message: err.message || 'Some error occurred while creating the post.' })
+            return res.status(500).json({ message: err.message || 'Une erreur est survenue pendant la récupération des publications' })
         }
         return res.status(200).json({ posts });
     });

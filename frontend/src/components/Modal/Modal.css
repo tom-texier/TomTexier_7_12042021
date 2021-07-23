@@ -53,3 +53,48 @@
     border-radius: 50%;
     margin-right: 20px;
 }
+
+.modal-box.confirm-box main p {
+    margin: 20px;
+}
+
+.modal-box.confirm-box footer {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(0, 0, 0, .08);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-box.confirm-box footer a {
+    padding: 4px 15px;
+    border: 2px solid;
+    border-radius: 35px;
+    color: #fff;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.modal-box.confirm-box footer a:not(:last-child) {
+    margin-right: 10px;
+}
+
+.modal-box.confirm-box footer a.cancel {
+    border-color: crimson;
+    background-color: crimson;
+}
+
+.modal-box.confirm-box footer a.confirm {
+    border-color: #00BF00;
+    background-color: #00BF00;
+}
+
+.modal-box.confirm-box footer a.cancel:hover {
+    background: none;
+    color: crimson;
+}
+
+.modal-box.confirm-box footer a.confirm:hover {
+    background: none;
+    color: #00BF00;
+}

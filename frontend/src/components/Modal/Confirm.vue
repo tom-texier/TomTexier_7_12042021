@@ -1,38 +1,46 @@
 <template>
-    <div v-if="reveal" class="modal-box" @click="closeModal">
+    <div v-if="reveal" class="modal-box confirm-box" @click="closeConfirm">
         <div class="modal-content">
             <header class="title">
-                <h2>{{ title }}</h2>
-                <i class="fas fa-times" @click="closeModal"></i>
+                <h2>{{ title ? title : "Êtes-vous sûr ?" }}</h2>
+                <i class="fas fa-times" @click="closeConfirm"></i>
             </header>
-            <main></main>
-            <footer></footer>
+            <main>
+                <p>{{ message ? message : "Cette action est irréversible." }}</p>
+            </main>
+            <footer>
+                <a aria-role="button" class="cancel" @click="closeConfirm">Annuler</a>
+                <a aria-role="button" class="confirm" @click="confirm">Confirmer</a>
+            </footer>
         </div>
     </div>
 </template>
 
 <script>
-import FormNewpost from '../Forms/Posts/Newpost'
-import FormEditpost from '../Forms/Posts/Editpost'
-import Avatar from '../Avatar/Avatar'
+
+import { deletePost } from '../../mixins/post';
 
 export default {
-    name: "Modal",
-    components: {
-        'form-newpost': FormNewpost,
-        'form-editpost': FormEditpost,
-        Avatar
-    },
+    name: "Confirm",
     props: [
         'reveal',
         'title',
+        'message',
         'action',
-        'user',
         'post'
     ],
     methods: {
-        closeModal(event) {
-            this.$emit('closeModal', event);
+        closeConfirm(event) {
+            this.$emit('closeConfirm', event);
+        },
+        confirm() {
+            if(this.action == "deletePost") {
+                deletePost(this.post.ID)
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(err => console.log(err));
+            }
         }
     }
 }
