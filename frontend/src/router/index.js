@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/pages/Home.vue';
 import LoginPage from '@/pages/Login.vue';
 import SignupPage from '@/pages/Signup.vue';
+import User from '@/pages/User.vue';
 
 const routes = [
 
@@ -28,6 +29,14 @@ const routes = [
         component: SignupPage,
         meta: {
             title: "S'inscrire | Groupomania"
+        }
+    },
+    {
+        name: 'me',
+        component: User,
+        path: '/me',
+        meta: {
+            title: "Mon profil | Groupomania"
         }
     },
     {

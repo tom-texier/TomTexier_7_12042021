@@ -12,7 +12,7 @@
                 :route="'/me'"
             ></Avatar>
             <form-newpost v-if="action == 'create'"></form-newpost>
-            <form-editpost v-else-if="action == 'update'" :post="post"></form-editpost>
+            <form-editpost v-else-if="action == 'update'" :post="post" @updatePostHTML="updatePostHTML($event)"></form-editpost>
         </div>
     </div>
 </template>
@@ -39,6 +39,9 @@ export default {
     methods: {
         closeModal(event) {
             this.$emit('closeModal', event);
+        },
+        updatePostHTML(post) {
+            this.$emit('updatePostHTML', post);
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div id="page" @click="hideMenu">
+    <div id="page">
         <header-top :user="user"></header-top>
         <div class="section-container row">
             <page-aside :user="user"></page-aside>
@@ -10,6 +10,8 @@
                     :key="post" :post="post"
                     :currentUserId="user.ID"
                     :currentUserRole="user.role"
+                    @deletePostHTML="deletePostHTML($event)"
+                    @updatePostHTML="updatePostHTML($event)"
                 ></Post>
             </main>
         </div>
@@ -42,6 +44,15 @@ export default {
     async mounted() {
         this.user = await getCurrentUser();
         this.posts = await getAllPosts();
+    },
+    methods: {
+        deletePostHTML(postID) {
+            document.getElementById(`post-${postID}`).remove();
+        },
+        updatePostHTML(data) {
+            document.getElementById(`post-${data.post.id}`).querySelector('.description').innerHTML = data.post.description;
+            document.getElementById(`post-${data.post.id}`).querySelector('.img img').src = data.post.image;
+        }
     }
 }
 </script>

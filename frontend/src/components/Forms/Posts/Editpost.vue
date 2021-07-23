@@ -112,10 +112,13 @@ export default {
             }
 
             updatePost(post, this.post.ID)
-                .then(data => {
-                    console.log(data);
+                .then(post => {
+                    this.updatePostHTML(post);
                 })
                 .catch(err => console.log(err));
+        },
+        updatePostHTML(post) {
+            this.$emit('updatePostHTML', post);
         }
     }
 }

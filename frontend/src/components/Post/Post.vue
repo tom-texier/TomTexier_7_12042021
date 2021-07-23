@@ -24,8 +24,31 @@
                 <img :src="post.image" alt="Image de l'article">
             </div>
         </main>
-        <Modal :reveal="revealModal" :title="titleModal" :action="action" @closeModal="closeModal" :user="user" :post="post"></Modal>
-        <Confirm :reveal="revealConfirm" :title="titleModal" :action="action" @closeConfirm="closeConfirm" :post="post" :message="message"></Confirm>
+        <footer>
+            <div class="metas">
+                <div aria-role="button" tabindex="0" class="likes"><i class="fas fa-thumbs-up"></i><span class="number">{{ post.NB_LIKES }}</span></div>
+                <div aria-role="button" tabindex="0" class="comments"><i class="fas fa-comment-dots"></i><span class="number">{{ post.NB_COMMENTS }}</span></div>
+                <div aria-role="button" tabindex="0" class="shares"><i class="fas fa-share"></i><span class="number">{{ post.NB_SHARES }}</span></div>
+            </div>
+        </footer>
+        <Modal
+            :reveal="revealModal"
+            :title="titleModal"
+            :action="action"
+            @closeModal="closeModal"
+            :user="user"
+            :post="post"
+            @updatePostHTML="updatePostHTML($event)"
+        ></Modal>
+        <Confirm
+            :reveal="revealConfirm"
+            :title="titleModal"
+            :action="action"
+            @closeConfirm="closeConfirm"
+            :post="post"
+            :message="message"
+            @deletePostHTML="deletePostHTML($event)"
+        ></Confirm>
     </article>
 </template>
 
@@ -127,6 +150,16 @@ export default {
             if(e.target === e.currentTarget) {
                 this.revealConfirm = false;
             }
+        },
+        deletePostHTML(postID) {
+            this.$emit('deletePostHTML', postID);
+            this.revealModal = false;
+            this.revealConfirm = false;
+        },
+        updatePostHTML(post) {
+            this.$emit('updatePostHTML', post);
+            this.revealModal = false;
+            this.revealConfirm = false;
         }
     }
 }

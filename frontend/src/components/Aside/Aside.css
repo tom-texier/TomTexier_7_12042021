@@ -48,6 +48,7 @@
     display: block;
     text-decoration: none;
     color: #000;
+    cursor: pointer;
 }
 
 .page-aside header nav a:not(:last-child) {

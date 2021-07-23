@@ -80,3 +80,33 @@ article .img img {
     margin: auto;
     display: block;
 }
+
+article footer .metas {
+    display: flex;
+    align-items: center;
+    margin: 0 0 10px;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+
+article footer .metas>div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    opacity: .3;
+    transition: .3s;
+}
+
+article footer .metas>div:hover,
+article footer .metas>div.active {
+    opacity: 1;
+    color: #FD2D01;
+}
+
+article footer .metas>div:not(:last-child) {
+    margin-right: 20px;
+}
+
+article footer .metas>div i {
+    margin-right: 5px;
+}

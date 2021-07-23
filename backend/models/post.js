@@ -2,7 +2,7 @@ const sql = require('./db');
 
 const Post = function(post) {
     this.id_user = post.idUser;
-    this.description = nl2br(post.description);
+    this.description = post.description;
     this.image = post.image;
 }
 
@@ -39,6 +39,7 @@ Post.update = (postID, userID, updatePost, result) => {
             ...updatePost
         });
         result(null, {
+            id: postID,
             ...updatePost
         })
     })

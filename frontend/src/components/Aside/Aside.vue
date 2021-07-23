@@ -9,6 +9,7 @@
             <nav>
                 <router-link to="/me">Mon profil</router-link>
                 <router-link to="/me/posts">Mes publications</router-link>
+                <a @click="signout">Déconnexion</a>
             </nav>
         </header>
         <main>
@@ -18,11 +19,19 @@
 </template>
 
 <script>
+
+import { signoutCall } from '../../mixins/auth'
+
 export default {
     name: "Aside",
     props: [
         'user'
-    ]
+    ],
+    methods: {
+        signout() {
+            signoutCall();
+        }
+    }
 }
 </script>
 

@@ -36,11 +36,14 @@ export default {
         confirm() {
             if(this.action == "deletePost") {
                 deletePost(this.post.ID)
-                    .then(data => {
-                        console.log(data);
+                    .then(postID => {
+                        this.deletePostHTML(postID);
                     })
                     .catch(err => console.log(err));
             }
+        },
+        deletePostHTML(postID) {
+            this.$emit('deletePostHTML', postID);
         }
     }
 }
