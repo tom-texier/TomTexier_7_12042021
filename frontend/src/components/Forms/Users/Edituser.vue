@@ -83,8 +83,8 @@ export default {
         'currentUser'
     ],
     updated() {
-        console.log(this.user);
         this.user = this.currentUser;
+        this.validateInput();
     },
     methods: {
         update() {
@@ -109,7 +109,6 @@ export default {
             return this.user.password === this.confirmPassword;
         },
         validateInput() {
-            console.log(this.user);
             if(this.user.lastname != '') {
                 this.lastnameValid = true;
             }
@@ -143,15 +142,18 @@ export default {
 
             if(this.samePassword() && this.user.password != "" && this.confirmPassword != "") {
                 this.passwordValid = true;
+                console.log(1);
             }
-            else if(this.user.password == "" && this.confirmPassword == "") {
+            else if((this.user.password == "" && this.confirmPassword == "") || !this.user.password) {
                 this.passwordValid = "";
+                console.log(2);
             }
             else {
                 this.passwordValid = false;
+                console.log(4);
             }
 
-            if(this.lastnameValid && this.firstnameValid && this.jobValid && this.emailValid && this.passwordValid) {
+            if(this.lastnameValid && this.firstnameValid && this.jobValid && this.emailValid && (this.passwordValid || this.passwordValid === "")) {
                 this.disabledButton = false;
                 return true;
             }
