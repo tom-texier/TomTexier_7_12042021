@@ -50,3 +50,27 @@ export const getAllPosts = () => {
             return response ? response.data : null
         })
 }
+
+export const likePost = (postID) => {
+    return HTTP.get(`/post/like/${postID}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + Cookies.get('groupomania_token'),
+            }
+        })
+        .then((response) => {
+            return response ? response.data : null
+        })
+}
+
+export const dislikePost = (postID) => {
+    return HTTP.delete(`/post/dislike/${postID}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + Cookies.get('groupomania_token'),
+            }
+        })
+        .then((response) => {
+            return response ? response.data : null
+        })
+}

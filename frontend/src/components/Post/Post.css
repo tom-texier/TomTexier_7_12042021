@@ -84,9 +84,7 @@ article .img img {
 article footer .metas {
     display: flex;
     align-items: center;
-    margin: 0 0 10px;
-    padding: 10px 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    padding: 20px 0 0;
 }
 
 article footer .metas>div {

@@ -62,6 +62,7 @@ User.findById = (userId, result) => {
             }
 
             result({ code: 'not-found' }, null);
+            return;
         }
     )
 }
@@ -84,6 +85,23 @@ User.findByEmail = (userEmail, result) => {
             result({ code: 'not-found' }, null);
         }
     )
+}
+
+User.update = (userID, updateUser, result) => {
+    sql.query(`UPDATE users SET ? WHERE ID = ${userID}`, updateUser, (err, res) => {
+        if (err) {
+            console.log('error: ', err);
+            result(err, null);
+            return;
+        }
+        console.log('Utilisateur mis à jour', {
+            ...updateUser
+        });
+        result(null, {
+            id: userID,
+            ...updateUser
+        })
+    })
 }
 
 module.exports = User;

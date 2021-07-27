@@ -72,3 +72,48 @@ exports.getAll = (req, res, next) => {
         return res.status(200).json({ posts });
     });
 }
+
+exports.getMetas = (req, res, next) => {
+    if (!req.body.userID || !req.body.postID) {
+        res.status(400).json({ message: 'Une erreur est survenue.' });
+    }
+
+    let metas = {
+        userLiked: 0,
+    };
+
+    Post.getUserLiked(
+        req.body.userID,
+        req.body.postID,
+        (err, meta) => {
+            if (err) {
+                return res.status(500).json({ message: err.message || 'Une erreur est survenue' });
+            }
+            metas.userLiked = meta[0].USER_LIKED;
+            return res.status(200).json({ metas });
+        })
+}
+
+exports.like = (req, res, next) => {
+    if (!req.params.postID) {
+        res.status(400).json({ message: 'Une erreur est survenue.' });
+    }
+    Post.like(req.params.postID, req.userID, (err, result) => {
+        if (err) {
+            return res.status(500).json({ message: err.message || 'Une erreur est survenue' });
+        }
+        return res.status(200).json({ message: "Post liked" })
+    })
+}
+
+exports.dislike = (req, res, next) => {
+    if (!req.params.postID) {
+        res.status(400).json({ message: 'Une erreur est survenue.' });
+    }
+    Post.dislike(req.params.postID, req.userID, (err, result) => {
+        if (err) {
+            return res.status(500).json({ message: err.message || 'Une erreur est survenue' });
+        }
+        return res.status(200).json({ message: "Post liked" })
+    })
+}

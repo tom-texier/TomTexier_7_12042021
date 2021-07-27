@@ -26,9 +26,8 @@
         </main>
         <footer>
             <div class="metas">
-                <div aria-role="button" tabindex="0" class="likes"><i class="fas fa-thumbs-up"></i><span class="number">{{ post.NB_LIKES }}</span></div>
-                <div aria-role="button" tabindex="0" class="comments"><i class="fas fa-comment-dots"></i><span class="number">{{ post.NB_COMMENTS }}</span></div>
-                <div aria-role="button" tabindex="0" class="shares"><i class="fas fa-share"></i><span class="number">{{ post.NB_SHARES }}</span></div>
+                <div @click="likedPost" aria-role="button" tabindex="0" :class="userLiked ? 'likes active' : 'likes'"><i class="fas fa-thumbs-up"></i><span class="number">{{ post.NB_LIKES }}</span></div>
+                <div aria-role="button" tabindex="0" class="shares"><i class="fas fa-share"></i>Partager</div>
             </div>
         </footer>
         <Modal
@@ -57,6 +56,10 @@
 import Avatar from '../Avatar/Avatar'
 import Modal from '../Modal/Modal'
 import Confirm from '../Modal/Confirm'
+import { HTTP } from '../../http-constants'
+import Cookies from 'js-cookie'
+
+import { likePost, dislikePost } from '../../mixins/post'
 
 export default {
     name: "Post",
@@ -68,7 +71,9 @@ export default {
             titleModal: "",
             action: "",
             user: "",
-            message: ""
+            message: "",
+            userLiked: false,
+            thePost: {}
         }
     },
     components: {
@@ -81,6 +86,10 @@ export default {
         'currentUserId',
         'currentUserRole',
     ],
+    mounted() {
+        this.getUserMetasPost(this.currentUserId, this.post.ID);
+        this.thePost = this.post;
+    },
     methods: {
         showMenu() {
             this.toggleMenu = true;
@@ -160,6 +169,33 @@ export default {
             this.$emit('updatePostHTML', post);
             this.revealModal = false;
             this.revealConfirm = false;
+        },
+        getUserMetasPost(userID, postID) {
+            HTTP.post('/post/metas', {userID: userID, postID: postID}, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + Cookies.get('groupomania_token'),
+                }
+            })
+            .then(response => {
+                this.userLiked = response.data.metas.userLiked;
+            })
+        },
+        likedPost() {
+            if(this.userLiked) {
+                dislikePost(this.post.ID)
+                    .then(()=> {
+                        this.userLiked = false;
+                        this.thePost.NB_LIKES--;
+                    })
+            }
+            else {
+                likePost(this.post.ID)
+                    .then(()=> {
+                        this.userLiked = true;
+                        this.thePost.NB_LIKES++;
+                    })
+            }
         }
     }
 }

@@ -21,7 +21,9 @@
 
 <script>
 import axios from 'axios';
+
 import { createPost } from '../../../mixins/post';
+import { getOneUser } from '../../../mixins/user';
 
 export default {
     name: "FormNewpost",
@@ -98,7 +100,10 @@ export default {
 
             createPost(post)
                 .then(data => {
-                    console.log(data);
+                    getOneUser(data.post.id_user)
+                        .then(() => {
+                            document.location.reload();
+                        });
                 })
                 .catch(err => console.log(err));
         }

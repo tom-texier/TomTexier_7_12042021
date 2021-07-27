@@ -59,14 +59,56 @@ Post.delete = (postID, result) => {
 
 Post.getAll = (result) => {
     sql.query(`
-                            SELECT posts.*,
-                            users.lastname,
-                            users.firstname,
-                            users.avatar_url,
-                            users.job,
-                            COUNT(likes.id_post) AS NB_LIKES,
-                            COUNT(comments.id_post) AS NB_COMMENTS,
-                            COUNT(shares.id_post) AS NB_SHARES FROM posts LEFT JOIN likes ON likes.id_post = posts.ID LEFT JOIN comments ON comments.id_post = posts.ID LEFT JOIN shares ON shares.id_post = posts.ID LEFT JOIN users ON users.ID = posts.id_user GROUP BY posts.ID ORDER BY posts.date_publish DESC `,
+        SELECT posts.*,
+        users.lastname,
+        users.firstname,
+        users.avatar_url,
+        users.job,
+        COUNT(likes.id_post) AS NB_LIKES
+        FROM posts
+        LEFT JOIN likes ON likes.id_post = posts.ID
+        LEFT JOIN users ON users.ID = posts.id_user
+        GROUP BY posts.ID
+        ORDER BY posts.date_publish DESC `,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+                return;
+            }
+            console.log(res);
+            result(null, res);
+        })
+}
+
+Post.getUserLiked = (userID, postID, result) => {
+    sql.query(`
+        SELECT COUNT(L.id_post) AS USER_LIKED
+        FROM likes L
+        WHERE
+            L.id_post = ${postID}
+            AND L.id_user = ${userID}`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+                return;
+            }
+            result(null, res);
+        })
+}
+
+Post.like = (postID, userID, result) => {
+    sql.query(`INSERT INTO likes(id_post, id_user) VALUES(${postID}, ${userID})`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+                return;
+            }
+            result(null, res);
+        })
+}
+
+Post.dislike = (postID, userID, result) => {
+    sql.query(`DELETE FROM likes WHERE id_post = ${postID} AND id_user = ${userID}`,
         (err, res) => {
             if (err) {
                 result(err, null);
