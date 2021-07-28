@@ -7,6 +7,7 @@
                 <FormEditUser :currentUser="user"></FormEditUser>
             </main>
         </div>
+        <main-footer></main-footer>
     </div>
 </template>
 
@@ -15,6 +16,7 @@
 import HeaderTop from '../components/Header/Header'
 import Aside from '../components/Aside/Aside'
 import FormEditUser from '../components/Forms/Users/Edituser'
+import Footer from '../components/Footer/Footer'
 
 import { getCurrentUser } from '../mixins/user'
 
@@ -28,7 +30,8 @@ export default {
     components: {
         'header-top': HeaderTop,
         'page-aside': Aside,
-        FormEditUser
+        FormEditUser,
+        'main-footer': Footer
     },
     async mounted() {
         this.user = await getCurrentUser();
@@ -39,5 +42,10 @@ export default {
 <style scoped lang="scss">
     #page main {
         width: calc(70% - 50px);
+    }
+    @media (max-width: 768px) {
+        #page main {
+            width: 100%;
+        }
     }
 </style>

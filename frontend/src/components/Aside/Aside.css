@@ -59,3 +59,21 @@
     color: #FD2D01;
     text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+    .page-aside {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        z-index: 100;
+        bottom: -100%;
+        left: 0;
+        top: unset;
+        background-color: #fff;
+        transition: .4s;
+        height: max-content;
+    }
+    .page-aside.active {
+        bottom: 0;
+    }
+}

@@ -47,4 +47,14 @@ $secondary-color: #FFD7D7;
 .row {
   display: flex;
 }
+
+@media (max-width: 425px) {
+  .row {
+    flex-direction: column;
+  }
+}
+
+#page {
+  position: relative;
+}
 </style>

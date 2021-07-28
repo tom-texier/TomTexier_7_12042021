@@ -15,9 +15,6 @@
                 <a @click="signout">Déconnexion</a>
             </nav>
         </header>
-        <main>
-
-        </main>
     </aside>
 </template>
 

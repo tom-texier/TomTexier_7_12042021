@@ -162,7 +162,7 @@ export default {
         background-color: #fff;
         padding: 30px;
         border-radius: 15px;
-        min-width: 450px;
+        width: 450px;
         max-width: 99%;
 
         h1 {

@@ -11,6 +11,10 @@
                     :lastname="user.lastname"
                     :route="'/me'"
                 ></Avatar>
+                <div class="toggleMenuResponsive" @click="openResponsiveMenu">
+                    <i v-if="!menuVisible" class="fas fa-bars"></i>
+                    <i v-else class="fas fa-times"></i>
+                </div>
             </div>
         </div>
     </nav>
@@ -22,11 +26,22 @@ import Avatar from '../Avatar/Avatar'
 
 export default {
     name: "HeaderTop",
+    data() {
+        return {
+            menuVisible: false
+        }
+    },
     props: [
         'user'
     ],
     components: {
         Avatar
+    },
+    methods: {
+        openResponsiveMenu() {
+            document.querySelector('.page-aside').classList.toggle('active');
+            this.menuVisible = !this.menuVisible;
+        }
     }
 }
 

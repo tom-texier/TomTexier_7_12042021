@@ -19,6 +19,7 @@
                 <p v-else>Cet utilisateur n'a rien publié pour le moment.</p>
             </main>
         </div>
+        <main-footer></main-footer>
     </div>
 </template>
 
@@ -28,6 +29,7 @@ import HeaderTop from '../components/Header/Header'
 import Aside from '../components/Aside/Aside'
 import HeaderUser from '../components/User/Header'
 import Post from '../components/Post/Post'
+import Footer from '../components/Footer/Footer'
 
 import { getCurrentUser, getOneUser } from '../mixins/user'
 import { getAllPostsByUserId } from '../mixins/post'
@@ -45,7 +47,8 @@ export default {
         'header-top': HeaderTop,
         'page-aside': Aside,
         HeaderUser,
-        Post
+        Post,
+        'main-footer': Footer
     },
     async beforeRouteUpdate (to) {
         this.user = await getOneUser(to.params.id);
@@ -73,5 +76,11 @@ export default {
 <style scoped lang="scss">
     #page main {
         width: calc(70% - 50px);
+    }
+
+    @media (max-width: 768px) {
+        #page main {
+            width: 100%;
+        }
     }
 </style>

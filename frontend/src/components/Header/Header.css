@@ -19,3 +19,22 @@ nav.main-header .section-container>a {
 nav.main-header .section-container>a>img {
     width: 200px;
 }
+
+nav.main-header .section-container .menu {
+    display: flex;
+    align-items: center;
+}
+
+nav.main-header .section-container .menu .toggleMenuResponsive {
+    margin-left: 15px;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    nav.main-header .section-container .menu .toggleMenuResponsive {
+        display: block;
+    }
+    nav.main-header .section-container .menu a {
+        display: none;
+    }
+}

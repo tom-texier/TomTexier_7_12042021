@@ -16,6 +16,7 @@
                 ></Post>
             </main>
         </div>
+        <main-footer></main-footer>
     </div>
 </template>
 
@@ -24,6 +25,7 @@ import HeaderTop from '../components/Header/Header'
 import NewPost from '../components/Newpost/Newpost'
 import Aside from '../components/Aside/Aside'
 import Post from '../components/Post/Post'
+import Footer from '../components/Footer/Footer'
 
 import { getCurrentUser } from '../mixins/user'
 import { getAllPosts } from '../mixins/post'
@@ -40,6 +42,7 @@ export default {
         'header-top': HeaderTop,
         'new-post': NewPost,
         'page-aside': Aside,
+        'main-footer': Footer,
         Post
     },
     async mounted() {
@@ -61,5 +64,11 @@ export default {
 <style lang="scss" scoped>
 main {
     width: calc(70% - 50px);
+}
+
+@media (max-width: 768px) {
+    main {
+        width: 100%;
+    }
 }
 </style>
