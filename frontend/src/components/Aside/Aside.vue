@@ -7,6 +7,9 @@
             <h3>{{ user.firstname }} {{ user.lastname }}</h3>
             <p class="job">{{ user.job }}</p>
             <nav>
+                <router-link to="/">Toutes les publications</router-link>
+            </nav>
+            <nav>
                 <router-link to="/me">Mon profil</router-link>
                 <router-link to="/me/posts">Mes publications</router-link>
                 <a @click="signout">Déconnexion</a>

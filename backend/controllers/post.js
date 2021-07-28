@@ -117,3 +117,18 @@ exports.dislike = (req, res, next) => {
         return res.status(200).json({ message: "Post liked" })
     })
 }
+
+exports.getAllByUserId = (req, res, next) => {
+    if (!req.params.userID) {
+        res.status(400).json({ message: 'Une erreur est survenue.' });
+    }
+
+    Post.getAllByUserId(
+        req.params.userID,
+        (err, posts) => {
+            if (err) {
+                return res.status(500).json({ message: err.message || 'Une erreur est survenue pendant la récupération des publications' })
+            }
+            return res.status(200).json({ posts });
+        });
+}

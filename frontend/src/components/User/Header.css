@@ -1,0 +1,56 @@
+header {
+    box-shadow: 0 0 10px -5px rgb(0 0 0 / 30%);
+    border-radius: 10px;
+    overflow: hidden;
+    padding-bottom: 30px;
+}
+
+header .bg-primary {
+    background-color: #FD2D01;
+    height: 180px;
+    width: 100%;
+    position: relative;
+}
+
+header .bg-primary .contact {
+    position: absolute;
+    display: block;
+    top: 10px;
+    right: 20px;
+    padding: 5px 11.5px;
+    background-color: #FD2D01;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .3s ease;
+    color: #fff;
+    font-size: 25px;
+}
+
+header .bg-primary .contact:hover {
+    color: #FD2D01;
+    background-color: #fff;
+}
+
+header img {
+    display: block;
+    margin: -125px auto 0;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+header .infos h3 {
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 20px;
+}
+
+header .infos .job {
+    font-size: 16px;
+    color: #FD2D01;
+    text-align: center;
+    margin-top: 0;
+}

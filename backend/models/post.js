@@ -1,3 +1,4 @@
+const { user } = require('../config/db.config');
 const sql = require('./db');
 
 const Post = function(post) {
@@ -59,17 +60,22 @@ Post.delete = (postID, result) => {
 
 Post.getAll = (result) => {
     sql.query(`
-        SELECT posts.*,
-        users.lastname,
-        users.firstname,
-        users.avatar_url,
-        users.job,
-        COUNT(likes.id_post) AS NB_LIKES
-        FROM posts
+        SELECT
+            posts.*,
+            users.lastname,
+            users.firstname,
+            users.avatar_url,
+            users.job,
+            COUNT(likes.id_post) AS NB_LIKES
+        FROM
+            posts
         LEFT JOIN likes ON likes.id_post = posts.ID
         LEFT JOIN users ON users.ID = posts.id_user
-        GROUP BY posts.ID
-        ORDER BY posts.date_publish DESC `,
+        GROUP BY
+            posts.ID
+        ORDER BY
+            posts.date_publish 
+        DESC `,
         (err, res) => {
             if (err) {
                 result(err, null);
@@ -114,6 +120,35 @@ Post.dislike = (postID, userID, result) => {
                 result(err, null);
                 return;
             }
+            result(null, res);
+        })
+}
+
+Post.getAllByUserId = (userID, result) => {
+    sql.query(`
+        SELECT
+            posts.*,
+            users.lastname,
+            users.firstname,
+            users.avatar_url,
+            users.job,
+            COUNT(likes.id_post) AS NB_LIKES
+        FROM
+            posts
+        LEFT JOIN likes ON likes.id_post = posts.ID
+        LEFT JOIN users ON users.ID = posts.id_user
+        WHERE posts.id_user = ${userID}
+        GROUP BY
+            posts.ID
+        ORDER BY
+            posts.date_publish
+        DESC`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+                return;
+            }
+            console.log(res);
             result(null, res);
         })
 }

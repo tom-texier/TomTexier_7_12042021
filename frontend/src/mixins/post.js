@@ -74,3 +74,15 @@ export const dislikePost = (postID) => {
             return response ? response.data : null
         })
 }
+
+export const getAllPostsByUserId = (userID) => {
+    return HTTP.get(`/post/all/${userID}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + Cookies.get('groupomania_token'),
+            }
+        })
+        .then((response) => {
+            return response ? response.data : null;
+        })
+}
