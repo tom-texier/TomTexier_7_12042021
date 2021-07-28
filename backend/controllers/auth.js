@@ -21,7 +21,7 @@ exports.signup = (req, res, next) => {
 
             User.create(user, (err, user) => {
                 if (err) {
-                    return res.status(500).json({ message: err.message || 'Some error occurred while creating the user.' })
+                    return res.status(500).json({ message: err.message || 'Une erreur est survenue. Merci de réessayer utltérieurement.' })
                 }
                 return res.status(201).json({ user })
             })
@@ -45,7 +45,7 @@ exports.login = (req, res, next) => {
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
-                        return res.status(401).json({ error: "Il semble que l'email et/ou le mot de passe renseignés ne soit pas valides." });
+                        return res.status(401).json({ message: "Il semble que l'email et/ou le mot de passe renseignés ne soit pas valides." });
                     }
                     return res.status(200).json({
                         userID: user.ID,
@@ -53,8 +53,21 @@ exports.login = (req, res, next) => {
                     });
                 })
                 .catch(error => {
-                    return res.status(500).json({ error })
+                    return res.status(500).json({ message: `Une erreur est survenue. Merci de réessayer utltérieurement.` })
                 });
         }
+    })
+}
+
+exports.delete = (req, res, next) => {
+    if (!req.params.userID) {
+        return res.status(400).json({ message: 'Content can not be empty' });
+    }
+
+    User.delete(req.params.userID, (err, result) => {
+        if (err) {
+            return res.status(500).json({ message: err.message || 'Une erreur est survenue. Merci de réessayer utltérieurement.' })
+        }
+        return res.status(202).json({ message: "Compte supprimé" });
     })
 }

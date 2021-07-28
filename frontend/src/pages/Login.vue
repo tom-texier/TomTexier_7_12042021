@@ -31,6 +31,9 @@
 <script>
 import { loginCall } from '../mixins/auth'
 
+import Cookies from 'js-cookie'
+import router from '../router/index'
+
 export default {
     name: "LoginPage",
     data() {
@@ -59,7 +62,14 @@ export default {
                 email: this.email,
                 password: this.password,
             };
-            loginCall(user);
+            loginCall(user)
+                .then(user => {
+                    Cookies.set('groupomania_token', user.data.token, { expires: 1 });
+                    router.push('/');
+                })
+                .catch(error => {
+                    this.error = error.response.data.message;
+                })
         }
     }
 };

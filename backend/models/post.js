@@ -137,7 +137,10 @@ Post.getAllByUserId = (userID, result) => {
             posts
         LEFT JOIN likes ON likes.id_post = posts.ID
         LEFT JOIN users ON users.ID = posts.id_user
-        WHERE posts.id_user = ${userID}
+        WHERE
+            (posts.id_user = ${userID} AND posts.is_share = 0)
+            OR
+            (posts.id_sharer = ${userID} AND posts.is_share = 1)
         GROUP BY
             posts.ID
         ORDER BY

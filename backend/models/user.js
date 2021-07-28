@@ -104,4 +104,16 @@ User.update = (userID, updateUser, result) => {
     })
 }
 
+User.delete = (userID, result) => {
+    sql.query(`DELETE FROM users WHERE ID = ${userID}`, (err, res) => {
+        if (err) {
+            console.log('error: ', err);
+            result(err, null);
+            return;
+        }
+        console.log('Cet utilisateur a bien été supprimé !');
+        result(null, true);
+    });
+}
+
 module.exports = User;

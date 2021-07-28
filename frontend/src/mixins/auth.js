@@ -7,37 +7,32 @@ export function userIsLogged() {
 }
 
 export function loginCall(user) {
-    HTTP.post('/auth/login', {
-            email: user.email,
-            password: user.password,
-        })
-        .then(user => {
-            Cookies.set('groupomania_token', user.data.token, { expires: 1 });
-            router.push('/');
-        })
-        .catch(error => {
-            console.log(error);
-        })
+    return HTTP.post('/auth/login', {
+        email: user.email,
+        password: user.password,
+    })
 }
 
 export function signupCall(user) {
-    HTTP.post('/auth/signup', {
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email,
-            password: user.password,
-            job: user.job,
-        })
-        .then(response => {
-            console.log(response);
-            loginCall(user);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+    return HTTP.post('/auth/signup', {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        password: user.password,
+        job: user.job,
+    })
 }
 
 export function signoutCall() {
     Cookies.remove('groupomania_token');
     router.push('/login');
+}
+
+export function deleteUser(userID) {
+    return HTTP.delete(`/auth/delete/${userID}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + Cookies.get('groupomania_token'),
+        }
+    })
 }

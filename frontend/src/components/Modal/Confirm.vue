@@ -19,6 +19,7 @@
 <script>
 
 import { deletePost } from '../../mixins/post';
+import { deleteUser, signoutCall } from '../../mixins/auth'
 
 export default {
     name: "Confirm",
@@ -27,7 +28,8 @@ export default {
         'title',
         'message',
         'action',
-        'post'
+        'post',
+        'userID'
     ],
     methods: {
         closeConfirm(event) {
@@ -40,6 +42,15 @@ export default {
                         this.deletePostHTML(postID);
                     })
                     .catch(err => console.log(err));
+            }
+            else if(this.action == 'deleteUser') {
+                deleteUser(this.userID)
+                    .then(() => {
+                        signoutCall();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
             }
         },
         deletePostHTML(postID) {

@@ -6,6 +6,7 @@
         Tu as déjà un compte ?
         <router-link to="/login">Se connecter</router-link>
       </p>
+      <p class="error" v-if="error">{{ error }}</p>
       <div class="row">
         <div class="group">
           <label for="signup-lastname">Nom</label>
@@ -58,7 +59,9 @@
 
 <script>
 
-import { signupCall } from '../mixins/auth'
+import { signupCall, loginCall } from '../mixins/auth'
+import Cookies from 'js-cookie'
+import router from '../router/index'
 
 export default {
     name: "SignupPage",
@@ -76,7 +79,8 @@ export default {
             emailValid: "",
             passwordValid: "",
             emailRegExp: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            disabledButton: true
+            disabledButton: true,
+            error: ""
         }
     },
     methods: {
@@ -143,7 +147,20 @@ export default {
                 password: this.password,
                 job: this.job,
             };
-            signupCall(user);
+            signupCall(user)
+                .then(() => {
+                    loginCall(user)
+                        .then(user => {
+                            Cookies.set('groupomania_token', user.data.token, { expires: 1 });
+                            router.push('/');
+                        })
+                        .catch(error => {
+                            this.error = error.response.data.message;
+                        })
+                })
+                .catch(error => {
+                    this.error = error.response.data.message;
+                })
         }
     }
 };

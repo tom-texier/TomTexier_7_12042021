@@ -54,6 +54,11 @@ $secondary-color: #FFD7D7;
   }
 }
 
+.error {
+  color: red;
+  font-size: 14px;
+}
+
 #page {
   position: relative;
 }
