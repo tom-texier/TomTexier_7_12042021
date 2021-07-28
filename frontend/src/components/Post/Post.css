@@ -108,3 +108,8 @@ article footer .metas>div:not(:last-child) {
 article footer .metas>div i {
     margin-right: 5px;
 }
+
+article .is_share {
+    border: 1px solid rgba(0, 0, 0, .08);
+    padding: 20px;
+}

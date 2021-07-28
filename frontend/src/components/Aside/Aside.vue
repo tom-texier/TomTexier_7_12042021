@@ -11,7 +11,7 @@
             </nav>
             <nav>
                 <router-link to="/me">Mon profil</router-link>
-                <router-link to="/me/posts">Mes publications</router-link>
+                <router-link :to="`/user/${user.ID}`">Mes publications</router-link>
                 <a @click="signout">Déconnexion</a>
             </nav>
         </header>

@@ -2,13 +2,14 @@
     <article :id="`post-${post.ID}`">
         <header>
             <Avatar
-                :user_id="post.id_user"
-                :avatar_url="post.avatar_url"
-                :firstname="post.firstname"
-                :lastname="post.lastname"
-                :job="post.job"
+                v-if="post.is_share == 1"
+                :user_id="post.id_sharer"
+                :avatar_url="post.avatar_sharer"
+                :firstname="post.firstname_sharer"
+                :lastname="post.lastname_sharer"
+                :job="post.job_sharer"
             ></Avatar>
-            <nav class="post-actions" v-if="currentUserId === post.id_user || currentUserRole === 'admin'">
+            <nav class="post-actions" v-if="post.is_share == 1 && (currentUserId === post.id_sharer || currentUserRole === 'admin')">
                 <div class="toggle" @click="showMenu" tabindex="0">
                     <i class="fas fa-ellipsis-h"></i>
                 </div>
@@ -18,16 +19,37 @@
                 </ul>
             </nav>
         </header>
-        <main class="content">
-            <p class="description" v-html="post ? post.description : ''"></p>
-            <div class="img">
-                <img :src="post.image" alt="Image de l'article">
-            </div>
-        </main>
+        <p v-if="post.is_share == 1 && post.comment != ''" v-html="post.comment"></p>
+        <div :class="post.is_share == 1 ? 'is_share' : ''">
+            <header>
+                <Avatar
+                    :user_id="post.id_user"
+                    :avatar_url="post.avatar_url"
+                    :firstname="post.firstname"
+                    :lastname="post.lastname"
+                    :job="post.job"
+                ></Avatar>
+                <nav class="post-actions" v-if="post.is_share != 1 && (currentUserId === post.id_user || currentUserRole === 'admin')">
+                    <div class="toggle" @click="showMenu" tabindex="0">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <ul class="menu" v-if="toggleMenu">
+                        <li @click="openModal" tabindex="0"><i class="fas fa-pencil-alt"></i>Modifier</li>
+                        <li @click="openConfirm" tabindex="0"><i class="far fa-trash-alt"></i>Supprimer</li>
+                    </ul>
+                </nav>
+            </header>
+            <main class="content">
+                <p class="description" v-html="post ? post.description : ''"></p>
+                <div class="img">
+                    <img :src="post.image" alt="Image de l'article">
+                </div>
+            </main>
+        </div>
         <footer>
             <div class="metas">
                 <div @click="likedPost" aria-role="button" tabindex="0" :class="userLiked ? 'likes active' : 'likes'"><i class="fas fa-thumbs-up"></i><span class="number">{{ post.NB_LIKES }}</span></div>
-                <div aria-role="button" tabindex="0" class="shares"><i class="fas fa-share"></i>Partager</div>
+                <div @click="openModalShare" aria-role="button" tabindex="0" class="shares"><i class="fas fa-share"></i>Partager</div>
             </div>
         </footer>
         <Modal
@@ -73,7 +95,7 @@ export default {
             user: "",
             message: "",
             userLiked: false,
-            thePost: {}
+            thePost: {},
         }
     },
     components: {
@@ -85,10 +107,12 @@ export default {
         'post',
         'currentUserId',
         'currentUserRole',
+        'currentUser'
     ],
     mounted() {
         this.getUserMetasPost(this.currentUserId, this.post.ID);
         this.thePost = this.post;
+        console.log(this.thePost);
     },
     methods: {
         showMenu() {
@@ -137,11 +161,17 @@ export default {
             this.titleModal = "Modifier le post";
             this.action = 'update';
             this.user = {
-                'ID': this.post.id_user,
-                'avatar_url': this.post.avatar_url,
-                'firstname': this.post.firstname,
-                'lastname': this.post.lastname,
+                'ID': this.currentUser.id_user,
+                'avatar_url': this.currentUser.avatar_url,
+                'firstname': this.currentUser.firstname,
+                'lastname': this.currentUser.lastname,
             }
+        },
+        openModalShare() {
+            this.revealModal = true;
+            this.titleModal = "Partager le post";
+            this.action = 'share';
+            this.user = this.currentUser;
         },
         closeModal(e) {
             if(e.target === e.currentTarget) {

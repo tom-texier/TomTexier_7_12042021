@@ -4,13 +4,13 @@
         <div class="section-container row">
             <page-aside :user="currentUser"></page-aside>
             <main>
-                <HeaderUser :user="user"></HeaderUser>
+                <HeaderUser v-if="user.ID != currentUser.ID" :user="user"></HeaderUser>
                 <div class="posts" v-if="posts">
                 <Post
                     v-for="post in posts.posts"
                     :key="post" :post="post"
-                    :currentUserId="user.ID"
-                    :currentUserRole="user.role"
+                    :currentUserId="currentUser.ID"
+                    :currentUserRole="currentUser.role"
                     @deletePostHTML="deletePostHTML($event)"
                     @updatePostHTML="updatePostHTML($event)"
                 ></Post>
@@ -50,9 +50,17 @@ export default {
         this.currentUser = await getCurrentUser();
         this.user = await getOneUser(this.$route.params.id);
         document.title = `${this.user.firstname} ${this.user.lastname} | Groupomania`;
-    console.log(this.user);
         this.posts = await getAllPostsByUserId(this.$route.params.id);
     },
+    methods: {
+        deletePostHTML(postID) {
+            document.getElementById(`post-${postID}`).remove();
+        },
+        updatePostHTML(data) {
+            document.getElementById(`post-${data.post.id}`).querySelector('.description').innerHTML = data.post.description;
+            document.getElementById(`post-${data.post.id}`).querySelector('.img img').src = data.post.image;
+        }
+    }
 }
 </script>
 

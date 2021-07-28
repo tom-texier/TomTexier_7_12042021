@@ -13,6 +13,7 @@
             ></Avatar>
             <form-newpost v-if="action == 'create'"></form-newpost>
             <form-editpost v-else-if="action == 'update'" :post="post" @updatePostHTML="updatePostHTML($event)"></form-editpost>
+            <form-sharepost v-else-if="action == 'share'" :post="post" :user="user"></form-sharepost>
         </div>
     </div>
 </template>
@@ -20,6 +21,7 @@
 <script>
 import FormNewpost from '../Forms/Posts/Newpost'
 import FormEditpost from '../Forms/Posts/Editpost'
+import FormSharepost from '../Forms/Posts/Sharepost'
 import Avatar from '../Avatar/Avatar'
 
 export default {
@@ -27,6 +29,7 @@ export default {
     components: {
         'form-newpost': FormNewpost,
         'form-editpost': FormEditpost,
+        'form-sharepost': FormSharepost,
         Avatar
     },
     props: [
@@ -34,7 +37,7 @@ export default {
         'title',
         'action',
         'user',
-        'post'
+        'post',
     ],
     methods: {
         closeModal(event) {

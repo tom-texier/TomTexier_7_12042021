@@ -10,6 +10,7 @@
                     :key="post" :post="post"
                     :currentUserId="user.ID"
                     :currentUserRole="user.role"
+                    :currentUser="user"
                     @deletePostHTML="deletePostHTML($event)"
                     @updatePostHTML="updatePostHTML($event)"
                 ></Post>

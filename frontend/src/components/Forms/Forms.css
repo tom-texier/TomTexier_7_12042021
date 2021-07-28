@@ -105,3 +105,24 @@ form button:not(:disabled) {
 form button:not(:disabled):hover {
     background-color: #e42801;
 }
+
+form.share .post {
+    border: 1px solid rgba(0, 0, 0, .08);
+    margin-top: 10px;
+}
+
+form.share .post .img {
+    width: 100%;
+    height: 250px;
+    background-color: rgba(0, 0, 0, .02);
+}
+
+form.share .post .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+form.share .post .description {
+    padding: 0 20px;
+}

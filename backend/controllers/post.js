@@ -16,7 +16,7 @@ exports.create = (req, res, next) => {
     const post = new Post({
         idUser: req.userID,
         description: nl2br(req.body.description),
-        image: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : req.body.image
+        image: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : req.body.image,
     });
 
     Post.create(post, (err, post) => {
@@ -131,4 +131,30 @@ exports.getAllByUserId = (req, res, next) => {
             }
             return res.status(200).json({ posts });
         });
+}
+
+exports.share = (req, res, next) => {
+    if (!req.body) {
+        res.status(400).json({ message: 'Le contenu ne peut être vide !' });
+    }
+
+    const post = {
+        id_sharer: req.userID,
+        id_user: req.body.authorID,
+        description: nl2br(req.body.description),
+        image: req.body.image,
+        comment: req.body.comment ? nl2br(req.body.comment) : null,
+        is_share: true,
+        firstname_sharer: req.body.firstname_sharer,
+        lastname_sharer: req.body.lastname_sharer,
+        job_sharer: req.body.job_sharer,
+        avatar_sharer: req.body.avatar_sharer
+    };
+
+    Post.create(post, (err, post) => {
+        if (err) {
+            return res.status(500).json({ message: err.message || 'Une erreur est survenue pendant la création de la publication' });
+        }
+        return res.status(201).json({ post });
+    })
 }

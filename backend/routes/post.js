@@ -13,5 +13,6 @@ router.delete('/delete/:postID', auth, multer, postCtrl.delete);
 router.get('/all', auth, postCtrl.getAll);
 router.get('/all/:userID', auth, postCtrl.getAllByUserId);
 router.post('/metas', auth, postCtrl.getMetas);
+router.post('/share', auth, postCtrl.share);
 
 module.exports = router;
