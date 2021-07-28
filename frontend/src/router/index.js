@@ -44,9 +44,6 @@ const routes = [
         name: 'user',
         component: User,
         path: '/user/:id',
-        meta: {
-            title: "Utilisateur | Groupomania"
-        }
     }
 
 ];
@@ -57,7 +54,8 @@ const router = createRouter({
 });
 
 router.afterEach((route) => {
-    document.title = route.meta.title;
+    if (route.meta.title)
+        document.title = route.meta.title;
 })
 
 export default router;

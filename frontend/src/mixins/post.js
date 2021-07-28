@@ -28,6 +28,18 @@ export const updatePost = (post, postID) => {
         })
 }
 
+export const updateSharedPost = (post, postID) => {
+    return HTTP.put(`/post/updateShared/${postID}`, post, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + Cookies.get('groupomania_token'),
+            }
+        })
+        .then(response => {
+            return response ? response.data : null
+        })
+}
+
 export const deletePost = (postID) => {
     return HTTP.delete(`/post/delete/${postID}`, {
             headers: {

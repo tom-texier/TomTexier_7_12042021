@@ -11,6 +11,7 @@
                     :key="post" :post="post"
                     :currentUserId="currentUser.ID"
                     :currentUserRole="currentUser.role"
+                    :currentUser="currentUser"
                     @deletePostHTML="deletePostHTML($event)"
                     @updatePostHTML="updatePostHTML($event)"
                 ></Post>
@@ -45,6 +46,11 @@ export default {
         'page-aside': Aside,
         HeaderUser,
         Post
+    },
+    async beforeRouteUpdate (to) {
+        this.user = await getOneUser(to.params.id);
+        document.title = `${this.user.firstname} ${this.user.lastname} | Groupomania`;
+        this.posts = await getAllPostsByUserId(to.params.id);
     },
     async mounted() {
         this.currentUser = await getCurrentUser();

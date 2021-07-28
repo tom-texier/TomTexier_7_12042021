@@ -158,3 +158,23 @@ exports.share = (req, res, next) => {
         return res.status(201).json({ post });
     })
 }
+
+exports.updateShared = (req, res, next) => {
+    if (!req.body) {
+        res.status(400).json({ message: 'Le contenu ne peut être vide !' });
+    }
+
+    const post = {
+        comment: nl2br(req.body.comment),
+    };
+
+    Post.update(
+        req.params.postID,
+        req.userID, {...post },
+        (err, post) => {
+            if (err) {
+                return res.status(500).json({ message: err.message || 'Une erreur est survenue pendant la mise à jour de la publication' });
+            }
+            return res.status(200).json({ post });
+        })
+}

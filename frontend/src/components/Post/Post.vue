@@ -14,12 +14,12 @@
                     <i class="fas fa-ellipsis-h"></i>
                 </div>
                 <ul class="menu" v-if="toggleMenu">
-                    <li @click="openModal" tabindex="0"><i class="fas fa-pencil-alt"></i>Modifier</li>
+                    <li @click="openModalEditShare" tabindex="0"><i class="fas fa-pencil-alt"></i>Modifier</li>
                     <li @click="openConfirm" tabindex="0"><i class="far fa-trash-alt"></i>Supprimer</li>
                 </ul>
             </nav>
         </header>
-        <p v-if="post.is_share == 1 && post.comment != ''" v-html="post.comment"></p>
+        <p class="commentaire" v-if="post.is_share == 1 && post.comment != ''" v-html="post.comment"></p>
         <div :class="post.is_share == 1 ? 'is_share' : ''">
             <header>
                 <Avatar
@@ -60,6 +60,7 @@
             :user="user"
             :post="post"
             @updatePostHTML="updatePostHTML($event)"
+            @updatePostSharedHTML="updatePostSharedHTML()"
         ></Modal>
         <Confirm
             :reveal="revealConfirm"
@@ -112,7 +113,6 @@ export default {
     mounted() {
         this.getUserMetasPost(this.currentUserId, this.post.ID);
         this.thePost = this.post;
-        console.log(this.thePost);
     },
     methods: {
         showMenu() {
@@ -161,16 +161,22 @@ export default {
             this.titleModal = "Modifier le post";
             this.action = 'update';
             this.user = {
-                'ID': this.currentUser.id_user,
-                'avatar_url': this.currentUser.avatar_url,
-                'firstname': this.currentUser.firstname,
-                'lastname': this.currentUser.lastname,
+                'ID': this.post.id_user,
+                'avatar_url': this.post.avatar_url,
+                'firstname': this.post.firstname,
+                'lastname': this.post.lastname,
             }
         },
         openModalShare() {
             this.revealModal = true;
             this.titleModal = "Partager le post";
             this.action = 'share';
+            this.user = this.currentUser;
+        },
+        openModalEditShare() {
+            this.revealModal = true;
+            this.titleModal = "Modifier son commentaire";
+            this.action = 'updateShare';
             this.user = this.currentUser;
         },
         closeModal(e) {
@@ -197,6 +203,10 @@ export default {
         },
         updatePostHTML(post) {
             this.$emit('updatePostHTML', post);
+            this.revealModal = false;
+            this.revealConfirm = false;
+        },
+        updatePostSharedHTML() {
             this.revealModal = false;
             this.revealConfirm = false;
         },
